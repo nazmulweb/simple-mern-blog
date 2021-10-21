@@ -2,7 +2,7 @@ const PostMessage = require('../models/postMessage')
 
 exports.getPost = async (req, res) =>{
     try{
-        const posts = await postMessage.find();
+        const posts = await PostMessage.find();
 
         res.status(200).json(posts);
 
