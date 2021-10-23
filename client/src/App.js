@@ -50,6 +50,9 @@ function App() {
             <Route path="/create-post">
               <Form />
             </Route>
+            <Route path="/update/:id">
+              <Form />
+            </Route>
           </Switch>
         </Container>
       </div>

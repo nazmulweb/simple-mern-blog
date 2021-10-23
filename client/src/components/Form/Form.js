@@ -1,18 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Grid, Paper, Typography, TextField } from "@material-ui/core"
 import FileBase from 'react-file-base64';
-import { useDispatch } from "react-redux";
-
-import { createPost } from '../../actions/posts'
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { createPost, updatePost } from '../../actions/posts'
 import usestyles from './styles'
 
 const Form = () => {
+    const { id } = useParams();
+    const post = useSelector(state => id ? state.posts.find(p => p._id === id) : null)
     const [postData, setPostData] = useState({creator: '', title: '', message: '', tags: '', selectedFile: ''})
     const classes = usestyles();
     const dispatch = useDispatch();
 
-    const handleSubmit = () =>{
-        dispatch(dispatch(createPost(postData)))
+    useState(()=>{
+        if(post) setPostData(post)
+    }, [post])
+
+    const handleSubmit = (e) =>{
+        
+        e.preventDefault();
+        
+        if(id){
+            dispatch(updatePost(id, postData))
+        } else{
+            dispatch(createPost(postData))
+        }
     }
  
     const clear = () =>{
